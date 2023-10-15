@@ -149,9 +149,21 @@ public class Main {
         System.out.println("Импорт выполненен!");
     }
 
-    //7 - Удалить все данные из телефонной книги -
+    //7 - Удалить все данные из телефонной книги +
 
     private static void EraseAllData() {
+        System.out.print("Вы действительно хотите удалить все данные?(y/n): ");
+        String confirm = scanner.nextLine();
 
+        if (confirm.equals("y")) {
+            contact.clear();
+        }
+        else if (confirm.equals("n")) {
+            return;
+        }
+        else {
+            System.out.println("Вы ввели не верный символ, повторите попытку");
+        }
     }
+
 }
