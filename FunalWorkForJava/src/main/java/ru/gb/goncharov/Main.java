@@ -6,11 +6,10 @@ public class Main {
 
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-
+        System.out.println("Промежуточная аттестация по Java.");
+        System.out.println("====================================");
         boolean showMenu = true;
         while (showMenu) {
-            System.out.println("Промежуточная аттестация по Java.");
-            System.out.println("====================================");
             System.out.println("Работа с телефонной книгой");
             System.out.println("1 - Показать всю телефонную книгу");
             System.out.println("2 - Добавить контакт");
@@ -19,32 +18,49 @@ public class Main {
             System.out.println("5 - Найти контакт по номеру");
             System.out.println("0 - Завершение работы приложения");
             System.out.println("=====================================");
-            System.out.println("Выберете пункт меню:");
-            int numberMenu = Integer.parseInt(scanner.nextLine()); //сделать проверку
+            System.out.print("Выберете пункт меню: ");
 
-            switch (numberMenu) {
-                case 1:
-                    showPhoneBook();
-                    break;
-                case 2:
-                    addContactToPhoneBook();
-                    break;
-                case 3:
-                    removeContactFromPhoneBook();
-                    break;
-                case 4:
-                    SearchContactInPhoneBook();
-                    break;
-                case 5:
-                    SearchNumberInPhoneBook();
-                    break;
-                case 0:
-                    showMenu = false;
-                    break;
+            String numberForCheck = scanner.nextLine();
+            int numberOfMenu;
+            if ((numberOfMenu = tryParseInt(numberForCheck))>5 || numberOfMenu < 0){
+                System.out.println("Некорректно выбран пункт меню, попробуйте еще раз");
+                continue;
             }
+                switch (numberOfMenu) {
+                    case 1:
+                        showPhoneBook();
+                        break;
+                    case 2:
+                        addContactToPhoneBook();
+                        break;
+                    case 3:
+                        removeContactFromPhoneBook();
+                        break;
+                    case 4:
+                        SearchContactInPhoneBook();
+                        break;
+                    case 5:
+                        SearchNumberInPhoneBook();
+                        break;
+                    case 0:
+                        showMenu = false;
+                        break;
+                }
+
         }
 
 }
+
+    private static int tryParseInt(String checkNum) {
+        try {
+            return Integer.parseInt(checkNum);
+        }
+        catch (NumberFormatException e1){
+                System.out.println("Ошибка: Для выбора пункта меню, введите № пункта меню.");
+                return -1;
+            }
+
+    }
 
     private static void SearchNumberInPhoneBook() {
         System.out.println("Ищу номер");
@@ -65,4 +81,4 @@ public class Main {
     private static void showPhoneBook() {
         System.out.println("Вывожу весь список");
     }
-    }
+}
