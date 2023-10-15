@@ -94,14 +94,98 @@ public class Main {
         }
     }
 
-    //2 - Добавить контакт -
+    //2 - Добавить контакт +
     private static void addContactToPhoneBook() {
-        System.out.println("Добавляем контакт");
+        System.out.print("Введите имя контакта: ");
+        String name = scanner.nextLine();
+        System.out.println();
+        System.out.print("Введите номер контакта: ");
+        int number = Integer.parseInt(scanner.nextLine());
+        for (Map.Entry<Integer, String> e:contact.entrySet())
+            if (!contact.containsKey(number)){
+                contact.put(number, name);
+                System.out.println("Контакт успешно дорбавлен.");
+                return;
+            }
+            else
+            if (e.getKey().equals(number)){
+                System.out.printf("Данный номер уже существует %d - %s\n", e.getKey(), e.getValue());
+                System.out.println("Хотите его перезаписать? (y/n)");
+                String confirm = scanner.nextLine();
+                if (confirm.equals("y")) {
+                    contact.put(number, name);
+                    System.out.println("Контакт успешно обновлен.");
+                    return;
+                }
+                else if (confirm.equals("n")) {
+                    return;
+                }
+                else {
+                    System.out.println("Вы ввели не верный символ, повторите попытку");
+                }
+            }
+
     }
 
     //3 - Удалить контакт -
     private static void removeContactFromPhoneBook() {
-        System.out.println("Удаляю контакт");
+        System.out.print("Введите Имя или номер контакта для Удаления: ");
+        String eraseData = scanner.nextLine();
+        int checkData = tryParseInt(eraseData);
+        if(checkData==-1){
+            System.out.println("Ищу контакт..");
+            for (Map.Entry<Integer, String> e:contact.entrySet())
+                if (!contact.containsValue(eraseData)){
+                    System.out.println("Контакт не найден.");
+                    return;
+                }
+                else
+                if (e.getValue().equals(eraseData)){
+                    System.out.printf("%d - %s\n", e.getKey(), e.getValue());
+                }
+                System.out.print("Действительно хотите удалить данный контакт? (y/n): ");
+                String confirm = scanner.nextLine();
+                if (confirm.equals("y")) {
+                    for (Map.Entry<Integer, String> e:contact.entrySet()) {
+                        if (e.getValue().equals(eraseData)){
+                            contact.remove(e.getKey());
+                            System.out.println("Контакт успешно удален.");
+                        }
+                        return;
+                    }
+                }
+                else if (confirm.equals("n")) {
+                    return;
+                }
+                else {
+                    System.out.println("Вы ввели не верный символ, повторите попытку");
+                }
+        }
+        else {
+            System.out.println("Ищу номер..");
+            for (Map.Entry<Integer, String> e:contact.entrySet())
+                if (!contact.containsKey(checkData)){
+                    System.out.println("Контакт не найден.");
+                    return;
+                }
+                else
+                if (e.getKey().equals(checkData)) {
+                    System.out.printf("%d - %s\n", e.getKey(), e.getValue());
+                    System.out.print("Действительно хотите удалить данный контакт? (y/n): ");
+                        String confirm = scanner.nextLine();
+                        if (confirm.equals("y")) {
+                            contact.remove(e.getKey());
+                            System.out.println("Контакт успешно удален.");
+                            return;
+                        }
+                        else if (confirm.equals("n")) {
+                            return;
+                        } else {
+                         System.out.println("Вы ввели не верный символ, повторите попытку");
+                        }
+                }
+        }
+
     }
 
     //4 - Найти контакт по имени +
