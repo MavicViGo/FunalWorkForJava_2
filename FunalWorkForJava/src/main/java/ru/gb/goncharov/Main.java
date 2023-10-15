@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Промежуточная аттестация по Java.");
         System.out.println("====================================");
-        int lengthOfMenu = 6;
+        int lengthOfMenu = 7; //Колличество пунктов Меню.
         boolean showMenu = true;
         while (showMenu) {
             System.out.println();
@@ -29,6 +29,7 @@ public class Main {
             System.out.println("4 - Найти контакт по имени");
             System.out.println("5 - Найти контакт по номеру");
             System.out.println("6 - Заполнить телефонную книгу тестовыми данными");
+            System.out.println("7 - Удалить все данные из телефонной книги");
             System.out.println("0 - Завершение работы приложения");
             System.out.println("=====================================");
             System.out.print("Выберете пункт меню: ");
@@ -58,6 +59,9 @@ public class Main {
                     case 6:
                         FillTestsData(testData);
                         break;
+                    case 7:
+                        EraseAllData();
+                        break;
                     case 0:
                         showMenu = false;
                         break;
@@ -67,6 +71,7 @@ public class Main {
 
 }
     static HashMap<Integer, String > contact = new HashMap<>();
+
     private static int tryParseInt(String checkNum) {
         try {
             return Integer.parseInt(checkNum);
@@ -78,10 +83,7 @@ public class Main {
 
     }
 
-    private static void SearchNumberInPhoneBook() {
-        System.out.println("Ищу номер");
-    }
-
+    //1 - Показать всю телефонную книгу +
     private static void showPhoneBook() {
         System.out.println("Вывожу весь список..");
         if (contact.isEmpty()){
@@ -92,17 +94,50 @@ public class Main {
         }
     }
 
-    private static void SearchContactInPhoneBook() {
-        System.out.println("Ищу контакт");
+    //2 - Добавить контакт -
+    private static void addContactToPhoneBook() {
+        System.out.println("Добавляем контакт");
     }
 
+    //3 - Удалить контакт -
     private static void removeContactFromPhoneBook() {
         System.out.println("Удаляю контакт");
     }
 
-    private static void addContactToPhoneBook() {
-        System.out.println("Добавляем контакт");
+    //4 - Найти контакт по имени +
+    private static void SearchContactInPhoneBook() {
+        System.out.print("Введите Имя контакта: ");
+        String contForSearch = scanner.nextLine();
+        System.out.println("Ищу контакт..");
+        for (Map.Entry<Integer, String> e:contact.entrySet())
+            if (!contact.containsValue(contForSearch)){
+                System.out.println("Контакт не найден.");
+                return;
+            }
+            else
+            if (e.getValue().equals(contForSearch)){
+                System.out.printf("%d - %s\n", e.getKey(), e.getValue());
+            }
+
     }
+
+    //5 - Найти контакт по номеру +
+    private static void SearchNumberInPhoneBook() {
+        System.out.print("Введите номер контакта: ");
+        int nunForSearchInt = Integer.parseInt(scanner.nextLine());
+        System.out.println("Ищу номер..");
+        for (Map.Entry<Integer, String> e:contact.entrySet())
+            if (!contact.containsKey(nunForSearchInt)){
+                System.out.println("Контакт не найден.");
+                return;
+            }
+            else
+            if (e.getKey().equals(nunForSearchInt)){
+                System.out.printf("%d - %s\n", e.getKey(), e.getValue());
+            }
+    }
+
+    //6 - Заполнить телефонную книгу тестовыми данными +
 
     private static void FillTestsData(String[] data) {
         System.out.println("Заполняем Книгу тестовыми значениями..");
@@ -114,4 +149,9 @@ public class Main {
         System.out.println("Импорт выполненен!");
     }
 
+    //7 - Удалить все данные из телефонной книги -
+
+    private static void EraseAllData() {
+
+    }
 }
