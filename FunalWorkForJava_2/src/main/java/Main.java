@@ -23,18 +23,18 @@ public class Main {
            String testNameToy = scanner.nextLine();
            System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
            tempPercent = Integer.parseInt(scanner.nextLine());
-           CheckPercent(tempPercent, remainder);
 
            toys[tempIdToy].nameToy = testNameToy;
            toys[tempIdToy].idToy = tempIdToy;
-           toys[tempIdToy].weightToy = tempPercent / 10;
+           toys[tempIdToy].weightToy = CheckPercent(tempPercent, remainder) / 10;
 
            remainder = remainder - tempPercent;
-           System.out.println(toys[tempIdToy].nameToy);
            tempIdToy++;
 
        }
-
+            System.out.println();
+            System.out.println("================================================");
+            System.out.println("Сформирована следующая база, для розыгрыша:");
        for (int i = 1; i < tempIdToy ;i++){
            System.out.println(toys[i].idToy + " - " + toys[i].weightToy + " - " + toys[i].nameToy);
        }
