@@ -10,7 +10,39 @@ public class Main {
 
         String confirm = scanner.nextLine();
         if (confirm.equals("y")) {
-            FillDataOfToys();
+        //    FillDataOfToys();
+
+                   int tempPercent;
+       int tempIdToy = 1;
+       int remainder = 100;
+       Toy[] toys = new Toy[10];
+
+       while (remainder > 0){
+           toys[tempIdToy] = new Toy();
+           System.out.printf("Введите наименование %d-й игрушки: " ,tempIdToy);
+           String testNameToy = scanner.nextLine();
+           System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
+           tempPercent = Integer.parseInt(scanner.nextLine());
+           CheckPercent(tempPercent, remainder);
+
+           toys[tempIdToy].nameToy = testNameToy;
+           toys[tempIdToy].idToy = tempIdToy;
+           toys[tempIdToy].weightToy = tempPercent / 10;
+
+           remainder = remainder - tempPercent;
+           System.out.println(toys[tempIdToy].nameToy);
+           tempIdToy++;
+
+       }
+
+       for (int i = 1; i < tempIdToy ;i++){
+           System.out.println(toys[i].idToy + " - " + toys[i].weightToy + " - " + toys[i].nameToy);
+       }
+
+
+
+
+
         }
         else if (confirm.equals("n")) {
             System.out.println("Работа программы завершена.");
@@ -20,41 +52,41 @@ public class Main {
             System.out.println("Вы ввели не верный символ, повторите попытку");
         }
 
+
+    }
+//    static void FillDataOfToys(){
+//       int tempPercent;
+//       int tempIdToy = 1;
+//       int remainder = 100;
+//       Toy[] toys = new Toy[10];
 //
-//        System.out.print("Введите наименование 1-й игрушки: ");
-//        String testNameToy = scanner.nextLine();
-//        System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
-//        int testPercent = Integer.parseInt(scanner.nextLine());
-    }
-    static void FillDataOfToys(){
-       String tempNameToy = null;
-       int tempPercent = 0;
-       int tempIdToy = 1;
-       String tempToy = "toy";
-       int remainder = 100;
-       while (remainder > 0){
-           Toy toy1 = new Toy();
-           System.out.printf("Введите наименование %d-й игрушки: " ,tempIdToy);
-           String testNameToy = scanner.nextLine();
-           System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
-           tempPercent = Integer.parseInt(scanner.nextLine());
-           CheckPercent();
+//       while (remainder > 0){
+//           toys[tempIdToy] = new Toy();
+//           System.out.printf("Введите наименование %d-й игрушки: " ,tempIdToy);
+//           String testNameToy = scanner.nextLine();
+//           System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
+//           tempPercent = Integer.parseInt(scanner.nextLine());
+//           CheckPercent(tempPercent, remainder);
+//
+//           toys[tempIdToy].nameToy = testNameToy;
+//           toys[tempIdToy].idToy = tempIdToy;
+//           toys[tempIdToy].weightToy = tempPercent / 10;
+//
+//           remainder = remainder - tempPercent;
+//          // System.out.println(toys);
+//           tempIdToy++;
+//
+//       }
+//    }
 
-           toy1.nameToy = testNameToy;
-           toy1.idToy = tempIdToy;
-           toy1.weightToy = tempPercent / 10;
-
-           remainder = ReminderPercent(tempPercent);
-           System.out.println(remainder);
-           System.out.println(toy1);
-       }
-
-    }
-    static int ReminderPercent(int Percent){
-        return (100 - Percent);
-    }
-
-    static void CheckPercent(){
-        System.out.println("Проверка корректности, процента вероятности для игрушки");
+    static int CheckPercent(int percent, int remPercent){
+        if ((remPercent - percent) < 0 ){
+            System.out.println("Проверка корректности, процента вероятности для игрушки...");
+            int toMach = remPercent - percent;
+            int newPercent = percent + toMach;
+            System.out.printf("Оставшийся процент вероятности для распрелеления - %d значение исправлено автоматически.", newPercent);
+            return newPercent;
+        }
+        return percent;
     }
 }
