@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -39,18 +42,57 @@ public class Main {
            System.out.println(toys[i].idToy + " - " + toys[i].weightToy + " - " + toys[i].nameToy);
        }
 
+            int[] id = new int[10];
+            int[] weight = new int[10];
+            String[] name = new String[10];
+
+
+            //---------------------------------------------------------------------------
+            int count = 1;
+            int j = 1;
+            for (int i = 0; i < id.length; i++){
+
+                if (count <= toys[j].weightToy){
+                    id[i] = toys[j].idToy;
+                    weight[i] = toys[j].weightToy;
+                    name[i] = toys[j].nameToy;
+                    count++;
+                }
+                else {
+                    j++;
+                    count = 1;
+                    i--;
+                }
+
+            }
+
+            //---------------------------------------------------------------------------
+
+
+            Random random = new Random();
+            int num;
+
+            System.out.print("Введите колличество раундов розыгрыша: ");
+            int round = Integer.parseInt(scanner.nextLine());
+            for(int i = 0; i < round; i++){
+                System.out.printf("%d -й раунд розыгрыша! И %d -й приз, это:\n ", i+1, i+1);
+                num = random.nextInt(10);
+                System.out.printf("%s (с ID %d и вероятностью выпадения %d процентов)", name[num], id[num], weight[num] * 10 );
+                System.out.println();
+            }
 
 
 
-
-        }
-        else if (confirm.equals("n")) {
+            //----------------------------------
+        } else if (confirm.equals("n")) {
             System.out.println("Работа программы завершена.");
             return;
-        }
-        else {
+        } else {
             System.out.println("Вы ввели не верный символ, повторите попытку");
         }
+
+
+
 
 
     }
