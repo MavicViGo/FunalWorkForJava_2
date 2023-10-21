@@ -1,7 +1,9 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -67,18 +69,31 @@ public class Main {
             }
 
             //---------------------------------------------------------------------------
+            try {
+                File file = new File("result.txt");
 
+                if(!file.exists()) {
+                    file.createNewFile();
+                }
+                PrintWriter pw = new PrintWriter(file);
 
-            Random random = new Random();
-            int num;
-
-            System.out.print("Введите колличество раундов розыгрыша: ");
-            int round = Integer.parseInt(scanner.nextLine());
-            for(int i = 0; i < round; i++){
-                System.out.printf("%d -й раунд розыгрыша! И %d -й приз, это:\n ", i+1, i+1);
-                num = random.nextInt(10);
-                System.out.printf("%s (с ID %d и вероятностью выпадения %d процентов)", name[num], id[num], weight[num] * 10 );
-                System.out.println();
+                Random random = new Random();
+                int num;
+                System.out.println("================================================");
+                System.out.print("Введите колличество раундов розыгрыша: ");
+                int round = Integer.parseInt(scanner.nextLine());
+                for(int i = 0; i < round; i++){
+                    System.out.printf("%d -й раунд розыгрыша! И %d -й приз, это:\n ", i+1, i+1);
+                    num = random.nextInt(10);
+                    System.out.printf("%s (с ID %d и вероятностью выпадения %d процентов)", name[num], id[num], weight[num] * 10 );
+                    pw.printf("%s (с ID %d и вероятностью выпадения %d процентов) \n", name[num], id[num], weight[num] * 10 );
+                    System.out.println();
+                }
+                pw.close();
+                System.out.println("================================================");
+                System.out.println("Результаты розыгрыша сохранены в файл result.txt");
+            } catch (IOException e) {
+                System.out.println("Error: " + e);
             }
 
 
@@ -91,36 +106,7 @@ public class Main {
             System.out.println("Вы ввели не верный символ, повторите попытку");
         }
 
-
-
-
-
     }
-//    static void FillDataOfToys(){
-//       int tempPercent;
-//       int tempIdToy = 1;
-//       int remainder = 100;
-//       Toy[] toys = new Toy[10];
-//
-//       while (remainder > 0){
-//           toys[tempIdToy] = new Toy();
-//           System.out.printf("Введите наименование %d-й игрушки: " ,tempIdToy);
-//           String testNameToy = scanner.nextLine();
-//           System.out.print("Введите вероятность выпадения данной (от 1 до 100): ");
-//           tempPercent = Integer.parseInt(scanner.nextLine());
-//           CheckPercent(tempPercent, remainder);
-//
-//           toys[tempIdToy].nameToy = testNameToy;
-//           toys[tempIdToy].idToy = tempIdToy;
-//           toys[tempIdToy].weightToy = tempPercent / 10;
-//
-//           remainder = remainder - tempPercent;
-//          // System.out.println(toys);
-//           tempIdToy++;
-//
-//       }
-//    }
-
     static int CheckPercent(int percent, int remPercent){
         if ((remPercent - percent) < 0 ){
             System.out.println("Проверка корректности, процента вероятности для игрушки...");
